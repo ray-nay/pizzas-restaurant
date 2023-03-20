@@ -1,4 +1,9 @@
 class RestaurantPizzasController < ApplicationController
+
+    def index 
+        rest_pizzas = RestaurantPizza.all 
+        render json: rest_pizzas, except: [:created_at, :updated_at]
+    end 
     def create
         rest_pizza = RestaurantPizza.create!(restaurant_pizzas_params)
 
@@ -7,6 +12,7 @@ class RestaurantPizzasController < ApplicationController
         else
             render json: { "errors": ["validation errors"] }, status: :unprocessable_entity
     end 
+end
 
     private 
     def restaurant_pizzas_params
