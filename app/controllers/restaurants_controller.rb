@@ -1,12 +1,13 @@
 class RestaurantsController < ApplicationController
+    rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
 
     def index 
         restaurants = Restaurant.all 
-        render json: restaurants
+        render json: restaurants, except: [:created_at, :updated_at]
     end 
     def show 
         restaurant = Restaurant.find(params[:id])
-        render json: restaurant
+        render json: restaurant, except: [:created_at, :updated_at]
     end 
 
     def destroy
